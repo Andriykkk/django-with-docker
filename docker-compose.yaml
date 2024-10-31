@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: my_db
+      POSTGRES_USER: andriy
+      POSTGRES_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  django:
+    build: ./django_app  
+    container_name: django_app
+    restart: always
+    volumes:
+      - ./django_app:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://andriy:root@db/my_db
+    command: >
+      sh -c "until pg_isready -h db -p 5432; do sleep 2; done &&
+      python manage.py makemigrations &&
+      python manage.py migrate &&
+      echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@admin.com', 'admin')" | python manage.py shell &&
+      python manage.py runserver 0.0.0.0:8000"
+volumes:
+  db_data:

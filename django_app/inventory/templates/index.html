@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Inventory</title>
+  </head>
+  <body>
+    <h1>My Project Title</h1>
+    <p>
+      <em>Student Name: Your Name, Group: Your Group</em>
+    </p>
+
+    <h2>Suppliers</h2>
+    <table border="1">
+      <tr>
+        <th><strong>Supplier Name</strong></th>
+        <th><strong>Contact Person</strong></th>
+      </tr>
+      {% for supplier in suppliers %}
+      <tr>
+        <td>{{ supplier.company_name }}</td>
+        <td>{{ supplier.contact_person }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <h2>Materials</h2>
+    <table border="1">
+      <tr>
+        <th><strong>Material Name</strong></th>
+        <th><strong>Price</strong></th>
+      </tr>
+      {% for material in materials %}
+      <tr>
+        <td>{{ material.material_name }}</td>
+        <td>{{ material.price }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <h2>Deliveries</h2>
+    <table border="1">
+      <tr>
+        <th><strong>Delivery Date</strong></th>
+        <th><strong>Supplier</strong></th>
+        <th><strong>Material</strong></th>
+      </tr>
+      {% for delivery in deliveries %}
+      <tr>
+        <td>{{ delivery.delivery_date }}</td>
+        <td>{{ delivery.supplier }}</td>
+        <td>{{ delivery.material }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
