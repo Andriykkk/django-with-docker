@@ -27,5 +27,4 @@ class Delivery(models.Model):
     quantity = models.IntegerField()
 
     def __str__(self):
-        # return f"Delivery {self.delivery_date} from {self.supplier}"
-        return "Delivery"
+        return f"Delivery {self.delivery_date} from {self.supplier}"
